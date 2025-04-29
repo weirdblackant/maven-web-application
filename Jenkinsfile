@@ -1,4 +1,5 @@
 pipeline {
+  agent any
   tools {
     git 'default'
     maven 'maven1'
