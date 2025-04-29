@@ -15,5 +15,10 @@ pipeline {
 	sh 'mvn clean validate && mvn clean package'
       }
     }
+    stage('build_image') {
+      steps {
+	sh "docker build -t ${BUILD_NUMBER} ."
+      }
+    }
   }
 }
