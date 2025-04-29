@@ -18,6 +18,7 @@ pipeline {
     stage('build_image') {
       steps {
 	sh "docker build -t ${BUILD_NUMBER} ."
+
       }
     }
   }
