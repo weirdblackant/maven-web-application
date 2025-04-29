@@ -10,5 +10,10 @@ pipeline {
         git credentialsId: 'git_token', url: 'https://github.com/weirdblackant/maven-web-application.git'
       }
     }
+    stage('make_pkg') {
+      steps {
+	sh 'mvn clean validate && mvn clean package'
+      }
+    }
   }
 }
