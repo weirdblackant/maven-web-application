@@ -1,10 +1,9 @@
-version: '3.1'
 services:
   springboot:
-    image: dockerhandson/maven-web-application:VERSION
+    image: dockerhandson/maven-web-application:Version
     restart: always
     ports:
-    - 9090:8080
+    - 8080:8080
     networks:
     - mavenappbridge
 networks:

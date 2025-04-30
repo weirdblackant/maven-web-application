@@ -4,6 +4,9 @@ pipeline {
     git 'Default'
     maven 'maven1'
   }
+  triggers {
+    githubPush()
+  }
   stages {
     stage('git_scm') {
       steps {
@@ -17,8 +20,15 @@ pipeline {
     }
     stage('build_image') {
       steps {
-	sh "docker build -t ${BUILD_NUMBER} ."
+	sh "docker build -t im-${BUILD_NUMBER} ."
 
+      }
+    }
+    stage('push_image') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'docker_pass', passwordVariable: 'docker_pass', usernameVariable: 'docker_username')]) {
+	  sh "docker login -u ${docker_username} -p ${docker_pass}"
+        }
       }
     }
   }
