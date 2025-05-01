@@ -23,5 +23,13 @@ pipeline {
         sh "docker build -t heartocean/cnx-test-repo-1:im-${BUILD_NUMBER} ."
       }
     }
+    stage('push_image') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'docker_pass', passwordVariable: 'docker_pass', usernameVariable: 'docker_username')]) {
+          sh "docker login -u ${docker_username} -p ${docker_pass} \
+                && docker push heartocean/cnx-test-repo-1:im-${BUILD_NUMBER}"
+        }
+      }
+    }
   }
 }
