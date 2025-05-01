@@ -18,5 +18,10 @@ pipeline {
         sh 'mvn clean validate && mvn clean package'
       }
     }
+    stage('build_image') {
+      steps {
+        sh "docker build -t heartocean/cnx-test-repo-1:im-${BUILD_NUMBER} ."
+      }
+    }
   }
 }
