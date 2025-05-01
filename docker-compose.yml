@@ -1,6 +1,6 @@
 services:
   springboot:
-    image: dockerhandson/maven-web-application:Version
+    image: heartocean/cnx-test-repo-1:Version
     restart: always
     ports:
     - 8080:8080

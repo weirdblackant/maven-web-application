@@ -10,25 +10,7 @@ pipeline {
   stages {
     stage('git_scm') {
       steps {
-        git credentialsId: 'git_token', url: 'https://github.com/weirdblackant/maven-web-application.git'
-      }
-    }
-    stage('make_pkg') {
-      steps {
-	sh 'mvn clean validate && mvn clean package'
-      }
-    }
-    stage('build_image') {
-      steps {
-	sh "docker build -t im-${BUILD_NUMBER} ."
-
-      }
-    }
-    stage('push_image') {
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'docker_pass', passwordVariable: 'docker_pass', usernameVariable: 'docker_username')]) {
-	  sh "docker login -u ${docker_username} -p ${docker_pass}"
-        }
+	git credentialsId: 'github_cred', url: 'https://github.com/weirdblackant/maven-web-application.git'
       }
     }
   }
