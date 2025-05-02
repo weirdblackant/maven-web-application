@@ -1,5 +1,5 @@
 pipeline {
-  ssh_private_key_path= "/var/lib/jenkins/key1.pem"
+  env.ssh_private_key_path= "/var/lib/jenkins/key1.pem"
   agent any
   tools {
     git 'Default'
