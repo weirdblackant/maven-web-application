@@ -1,5 +1,4 @@
 pipeline {
-  env.image_name= "heartocean/cnx-test-repo-1:im-${BUILD_NUMBER}"
   agent any
   tools {
     git 'Default'
@@ -11,7 +10,7 @@ pipeline {
   stages {
     stage('git_scm') {
       steps {
-	git credentialsId: 'github_cred', url: 'https://github.com/weirdblackant/maven-web-application.git'
+        git credentialsId: 'git_cred', url: 'https://github.com/weirdblackant/maven-web-application.git'
       }
     }
     stage('make_pkg') {
@@ -21,21 +20,21 @@ pipeline {
     }
     stage('build_image') {
       steps {
-        sh "docker build -t $image_name ."
+        sh "docker build -t heartocean/cnx-test-repo-1:image${BUILD_NUMBER} ."
       }
     }
     stage('push_image') {
       steps {
-        withCredentials([usernamePassword(credentialsId: 'docker_pass', passwordVariable: 'docker_pass', usernameVariable: 'docker_username')]) {
-          sh "docker login -u ${docker_username} -p ${docker_pass} \
-                && docker push $image_name"
-        }
+        withCredentials([usernamePassword(credentialsId: 'docker_cred', passwordVariable: 'docker_pass', usernameVariable: 'docker_username')]) {
+          sh "docker login -u $docker_username -p ${docker_pass} \
+		&& docker push heartocean/cnx-test-repo-1:image${BUILD_NUMBER}"
+	}
       }
     }
     stage('deploy_app') {
       steps {
-        withCredentials([sshUserPrivateKey(credentialsId: 'ssh_private_key_file', keyFileVariable: 'ssh_key', usernameVariable: 'username')]) {
-	  sh "ssh -o StrictHostKeyChecking=false ubuntu@100.26.230.156 ls"
+	withCredentials([sshUserPrivateKey(credentialsId: 'ssh_auth', keyFileVariable: 'ssh_key', usernameVariable: 'ssh_username')]) {
+	  sh "scp -o StrictHostKeyChecking=false -i $ssh_key $ssh_username@100.26.230.156:/home/ubuntu"
         }
       }
     }
