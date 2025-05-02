@@ -34,7 +34,7 @@ pipeline {
     stage('deploy_app') {
       steps {
 	withCredentials([sshUserPrivateKey(credentialsId: 'ssh_auth', keyFileVariable: 'ssh_key', usernameVariable: 'ssh_username')]) {
-	  sh "scp -o StrictHostKeyChecking=false -i $ssh_key $ssh_username@100.26.230.156:/home/ubuntu"
+	  sh "scp -o StrictHostKeyChecking=false -i ssh_key $ssh_username@100.26.230.156:/home/ubuntu"
         }
       }
     }
