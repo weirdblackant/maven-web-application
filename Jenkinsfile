@@ -1,5 +1,7 @@
 pipeline {
-  env.ssh_private_key_path= "/var/lib/jenkins/key1.pem"
+  environment {
+    ssh_private_key_path= '/var/lib/jenkins/key1.pem'
+  }
   agent any
   tools {
     git 'Default'
@@ -35,7 +37,7 @@ pipeline {
     stage('deploy_app') {
       steps {
 	withCredentials([sshUserPrivateKey(credentialsId: 'ssh_auth', keyFileVariable: 'ssh_private_key_path', usernameVariable: 'ssh_username')]) {
-          sh "scp docker-compose.yml -o StrictHostKeyChecking=false -i ${ssh_private_key_path} $ssh_username@100.26.230.156:/home/ubuntu"
+          sh "scp docker-compose.yml -o StrictHostKeyChecking=false -i ${ssh_private_key_path} $ssh_username@54.160.115.147:/home/ubuntu"
         }
       }
     }
