@@ -37,7 +37,7 @@ pipeline {
     stage('deploy_app') {
       steps {
 	withCredentials([sshUserPrivateKey(credentialsId: 'ssh_auth', keyFileVariable: 'ssh_private_key_path', usernameVariable: 'ssh_username')]) {
-          sh "scp docker-compose.yml -o StrictHostKeyChecking=false -i ${ssh_private_key_path} $ssh_username@54.160.115.147:/home/ubuntu"
+          sh "scp -i ${ssh_private_key_path} docker-compose.yml -o StrictHostKeyChecking=false $ssh_username@54.160.115.147:/home/ubuntu && echo $ssh_private_key_path"
         }
       }
     }
