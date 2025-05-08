@@ -36,7 +36,7 @@ pipeline {
     }
     stage('modify_compose_file') {
       steps {
-        sh "sed '3s/Version/image${BUILD_NUMBER}/' docker-compose.yml"
+        sh "sed -e '3s/Version/image${BUILD_NUMBER}/' docker-compose.yml"
       }
     }
     stage('deploy_app') {
