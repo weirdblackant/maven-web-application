@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    ssh_pvt_key= '/var/lib/jenkins/key1.pem'
+    ssh_pvt_key= '/var/jenkins_home/key1.pem'
   }
   agent any
   tools {
@@ -42,7 +42,7 @@ pipeline {
     stage('deploy_app') {
       steps {
 	withCredentials([sshUserPrivateKey(credentialsId: 'ssh_auth', keyFileVariable: 'ssh_pvt_key', usernameVariable: 'ssh_username')]) {
-          sh "scp -o StrictHostKeyChecking=false -i ${env.ssh_pvt_key} docker-compose.yml $ssh_username@54.160.115.147:/home/ubuntu && ssh -i ${env.ssh_pvt_key} $ssh_username@54.160.115.147 docker-compose up -d"
+          sh "scp -o StrictHostKeyChecking=false -i ${env.ssh_pvt_key} docker-compose.yml $ssh_username@35.153.79.249:/home/ubuntu && ssh -i ${env.ssh_pvt_key} $ssh_username@35.153.79.249 docker-compose up -d"
         }
       }
     }
