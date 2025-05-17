@@ -36,6 +36,7 @@ pipeline {
         sh "sed -i '3s/Version/image${BUILD_NUMBER}/' docker-compose.yml"
       }
     }
+
     stage('deploy_app') {
       steps {
 	withCredentials([sshUserPrivateKey(credentialsId: 'ssh_auth', keyFileVariable: 'ssh_pvt_key', usernameVariable: 'ssh_username')]) {
