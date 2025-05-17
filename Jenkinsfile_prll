@@ -43,7 +43,7 @@ pipeline {
     stage('deploy_app') {
       steps {
 	withCredentials([sshUserPrivateKey(credentialsId: 'ssh_auth', keyFileVariable: 'ssh_pvt_key', usernameVariable: 'ssh_username')]) {
-          sh "scp -o StrictHostKeyChecking=false -i $ssh_pvt_key docker-compose.yml $ssh_username@107.23.104.211:/home/ubuntu && ssh -i $ssh_pvt_key $ssh_username@107.23.104.211 docker-compose up -d"
+          sh "scp -o StrictHostKeyChecking=false -i $ssh_pvt_key docker-compose.yml $ssh_username@:52.87.217.1:/home/ubuntu && ssh -i $ssh_pvt_key $ssh_username@52.87.217.1 docker-compose up -d"
         }
       }
     }
