@@ -4,7 +4,6 @@ pipeline {
     git 'Default'
     maven 'maven1'
   }
-
   triggers {
     githubPush()
   }
